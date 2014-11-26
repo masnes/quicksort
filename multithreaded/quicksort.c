@@ -63,7 +63,7 @@ void *quicksort(void *q)
     if (left >= right)   /* do nothing if array contains */
         return NULL;     /* fewer than 2 elements */
     swap(v, left, (left + right)/2);  /*  move partition elem to v[0] */
-    last_swapped_pos = left;          
+    last_swapped_pos = left;
     for (i = left + 1; i <= right; i++) /* partition */
         if (v[i] < v[left])
             swap(v, ++last_swapped_pos, i);
