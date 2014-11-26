@@ -94,7 +94,7 @@ void *quicksort(void *q)
     if (create_threads) {
         while(pthread_mutex_lock(&globals_lock))
             ;
-        allowed_threads++;
+        allowed_threads += create_threads;
         while(pthread_mutex_unlock(&globals_lock))
             fprintf(stderr, "Failure giving up lock\n");
     }
