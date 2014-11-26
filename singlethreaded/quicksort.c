@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define ARRAYLENGTH 100000
+#define ARRAYLENGTH 20000
 
 /*  swap: interchange v[i] and v[j] */
 void swap(int v[], long int i, long int j)
