@@ -1,13 +1,13 @@
 CFLAGS=-Wall -lm -g -pthreads
 CC=clang
 LDFLAGS=
-SOURCES=
+SOURCES=quicksort.c
 OBJECTS=
 EXECUTABLE=
 
 all: quicksort
 	
-reversepolishcalc:
+quicksort:
 	$(CC) $(CFLAGS) $(SOURCES) -o $(EXECUTABLE)
 
 $@: 
