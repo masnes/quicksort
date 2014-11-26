@@ -53,17 +53,17 @@ void *quicksort(void *q)
         } else if (allowed_threads > 0) {
             create_threads = 1;
             allowed_threads--;
-        } else 
+        } else
             create_threads = 0;
         while(pthread_mutex_unlock(&globals_lock))
             fprintf(stderr, "Failure giving up lock\n");
     } else
         create_threads = 0;
 
-    if (left >= right) /* do nothing if array contains */
-        return NULL;        /* fewer than 2 elements */
-    swap(v, left, (left + right)/2); /*  move partition elem */
-    last_swapped_pos = left;                     /* to v[0] */
+    if (left >= right)   /* do nothing if array contains */
+        return NULL;     /* fewer than 2 elements */
+    swap(v, left, (left + right)/2);  /*  move partition elem to v[0] */
+    last_swapped_pos = left;          
     for (i = left + 1; i <= right; i++) /* partition */
         if (v[i] < v[left])
             swap(v, ++last_swapped_pos, i);
