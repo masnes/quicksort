@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
-#define ARRAYLENGTH 200000
+#define ARRAYLENGTH 20000
 #define MAXTHREADS 4
 #define MAXRAND 100
 
