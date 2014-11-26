@@ -19,8 +19,8 @@ void quicksort(int v[], long int left, long int right)
 
     if (left >= right) /* do nothing if array contains */
         return;        /* fewer than 2 elements */
-    swap(v, left, (left + right)/2); /*  move partition elem */
-    last_swapped_pos = left;                     /* to v[0] */
+    swap(v, left, (left + right)/2); /*  move partition elem to v[0] */
+    last_swapped_pos = left;
     for (i = left + 1; i <= right; i++) /* partition */
         if (v[i] < v[left])
             swap(v, ++last_swapped_pos, i);
@@ -29,7 +29,7 @@ void quicksort(int v[], long int left, long int right)
     quicksort(v, last_swapped_pos+1, right);
 }
 
-int main() 
+int main()
 {
     FILE *output;
     long int i;
