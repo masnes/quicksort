@@ -114,6 +114,7 @@ int main()
     }
 
     output = fopen("output", "w");
+    fprintf(output, "Initial array:\n");
     for (i = 0; i < ARRAYLENGTH-1; i++)
         fprintf(output, "%d, ", array[i]);
     fprintf(output, "%d\n\n", array[i]);
@@ -123,6 +124,7 @@ int main()
     q.right = ARRAYLENGTH-1;
     quicksort(&q);
 
+    fprintf(output, "Sorted:\n");
     for (i = 0; i < ARRAYLENGTH-1; i++)
         fprintf(output, "%d, ", array[i]);
     fprintf(output, "%d\n", array[i]);
