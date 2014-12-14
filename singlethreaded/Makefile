@@ -7,7 +7,7 @@ EXECUTABLE=quicksort
 
 all: quicksort
 
-quicksort:
+quicksort: $(SOURCES)
 	$(CC) $(CFLAGS) $(SOURCES) -o $(EXECUTABLE)
 
 $@:
