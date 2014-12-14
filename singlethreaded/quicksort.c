@@ -36,6 +36,32 @@ void quicksort(int v[], long int left, long int right)
     quicksort(v, last_swapped_pos+1, right);
 }
 
+/* print_array: print array to file, with optional starting message */
+int print_array(FILE *f, int *array, char *starting_message)
+{
+    long int i;
+
+    if (!f) {
+        fprintf(stderr, "Error: trying to print to nonexistant file\n");
+        return EXIT_FAILURE;
+    }
+
+    if (!array) {
+        fprintf(stderr, "Error: trying to print nonexistant array\n");
+        return EXIT_FAILURE;
+    }
+
+    if (starting_message) {
+        fprintf(f, "%s\n", starting_message);
+    }
+
+    for (i = 0; i < ARRAYLENGTH-1; i++)
+        fprintf(f, "%d, ", array[i]);
+    fprintf(f, "%d\n\n", array[i]);
+
+    return EXIT_SUCCESS;
+}
+
 int main()
 {
     FILE *output;
@@ -48,15 +74,9 @@ int main()
     }
 
     output = fopen("output", "w");
-    fprintf(output, "Initial array:\n");
-    for (i = 0; i < ARRAYLENGTH; i++)
-        fprintf(output, "%d, ", array[i]);
-    fprintf(output, "%d\n\n", array[i]);
+    print_array(output, array, "Initial array:");
 
     quicksort(array, 0, ARRAYLENGTH-1);
 
-    fprintf(output, "Sorted:\n");
-    for (i = 0; i < ARRAYLENGTH-1; i++)
-        fprintf(output, "%d, ", array[i]);
-    fprintf(output, "%d\n", array[i]);
+    print_array(output, array, "Sorted:");
 }
