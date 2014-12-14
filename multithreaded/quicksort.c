@@ -57,9 +57,6 @@ void *quicksort(void *q)
     qpackage rightpkg;
 
 
-    if (left >= right)   /* do nothing if array contains */
-        return NULL;     /* fewer than 2 elements */
-
     package = q;
 
     v = package->v;
@@ -67,6 +64,9 @@ void *quicksort(void *q)
     right = package->right;
 
     swap(v, left, (left + right)/2);  /*  move partition elem to v[0] */
+    if (left >= right)   /* do nothing if array contains */
+        return NULL;     /* fewer than 2 elements */
+
     last_swapped_pos = left;
     for (i = left + 1; i <= right; i++) /* partition */
         if (v[i] < v[left])
