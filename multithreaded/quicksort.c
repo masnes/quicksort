@@ -139,8 +139,8 @@ int print_array(FILE *f, int *array, char *starting_message)
 int main()
 {
     FILE *output;
-    long int i;
     int array[ARRAYLENGTH];
+    long int i;
     qpackage q;
 
     for (i = 0; i < ARRAYLENGTH; i++)
