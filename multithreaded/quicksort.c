@@ -11,6 +11,7 @@ typedef struct quicksort_package {
     int *v;
     long int left;
     long int right;
+    unsigned int seed;
 } qpackage;
 
 int allowed_threads = MAXTHREADS-1;
@@ -50,7 +51,9 @@ void *quicksort(void *q)
     int *v;
     int create_threads;
     long int left, right;
+    long int swap_pos;
     long int i, last_swapped_pos;
+    unsigned int seed;
     pthread_t left_thread, right_thread;
     qpackage *package;
     qpackage leftpkg;
@@ -59,24 +62,29 @@ void *quicksort(void *q)
 
     package = q;
 
+    seed = package->seed;
     v = package->v;
     left = package->left;
     right = package->right;
 
-    swap(v, left, (left + right)/2);  /*  move partition elem to v[0] */
     if (left >= right)   /* do nothing if array contains */
         return NULL;     /* fewer than 2 elements */
 
+
+    swap_pos = (rand_r(&seed) % (right-left+1)) + left;  /* anywhere in [left .. right] */
+    swap(v, left, swap_pos);  /*  move partition elem to v[0] */
     last_swapped_pos = left;
     for (i = left + 1; i <= right; i++) /* partition */
         if (v[i] < v[left])
             swap(v, ++last_swapped_pos, i);
     swap(v, left, last_swapped_pos);      /* restore partition elem */
 
+    leftpkg.seed = seed;
     leftpkg.v = v;
     leftpkg.left = left;
     leftpkg.right = last_swapped_pos-1;
 
+    rightpkg.seed = seed;
     rightpkg.v = v;
     rightpkg.left = last_swapped_pos+1;
     rightpkg.right = right;
@@ -152,6 +160,7 @@ int main()
     output = fopen("output", "w");
     print_array(output, array, "Initial array:");
 
+    q.seed = 1;
     q.v = array;
     q.left = 0;
     q.right = ARRAYLENGTH-1;
