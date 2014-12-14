@@ -25,6 +25,24 @@ void swap(int v[], long int i, long int j)
     v[j] = temp;
 }
 
+int threads_to_create() 
+{
+    int threads_to_create;
+
+    while(pthread_mutex_lock(&globals_lock))
+        ;
+    if (allowed_threads <= 2) {
+        threads_to_create = allowed_threads;
+    } else {
+        threads_to_create = 2;
+    }
+    allowed_threads -= threads_to_create;
+    while(pthread_mutex_unlock(&globals_lock))
+        fprintf(stderr, "Failure giving up lock\n");
+
+    return threads_to_create;
+}
+
 /* quicksort: sort v[left]...v[right] into increasing order */
 void *quicksort(void *q)
 {
@@ -45,23 +63,13 @@ void *quicksort(void *q)
 
     /* only deal with threading overhead if it's likely to be necessary */
     if (allowed_threads > 0) {
-        while(pthread_mutex_lock(&globals_lock))
-            ;
-        if (allowed_threads > 1) {
-            create_threads = 2;
-            allowed_threads -= 2;
-        } else if (allowed_threads > 0) {
-            create_threads = 1;
-            allowed_threads--;
-        } else
-            create_threads = 0;
-        while(pthread_mutex_unlock(&globals_lock))
-            fprintf(stderr, "Failure giving up lock\n");
+        create_threads = threads_to_create();
     } else
         create_threads = 0;
 
     if (left >= right)   /* do nothing if array contains */
         return NULL;     /* fewer than 2 elements */
+
     swap(v, left, (left + right)/2);  /*  move partition elem to v[0] */
     last_swapped_pos = left;
     for (i = left + 1; i <= right; i++) /* partition */
