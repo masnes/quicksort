@@ -79,4 +79,5 @@ int main()
     quicksort(array, 0, ARRAYLENGTH-1);
 
     print_array(output, array, "Sorted:");
+    fclose(output);
 }
