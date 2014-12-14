@@ -16,17 +16,16 @@ void swap(int v[], long int i, long int j)
 void quicksort(int v[], long int left, long int right)
 {
     long int i, last_swapped_pos;
-		long int swap_pos;
+    long int swap_pos;
 
-		/* randomized quicksort, not just quicksort */
-		if (right - left + 1) { /* avoid mod by 0 */
-			swap_pos = rand() % (right-left+1);  /* anywhere in [left .. right] */
-			swap(v, v[left], v[swap_pos]);
-		}
+    /* randomized quicksort, not just quicksort */
+    if (right - left + 1) { /* avoid mod by 0 */
+        swap_pos = (rand() % (right-left+1)) + left;  /* anywhere in [left .. right] */
+        swap(v, v[left], v[swap_pos]);
+    }
 
     if (left >= right) /* do nothing if array contains */
         return;        /* fewer than 2 elements */
-    swap(v, left, (left + right)/2); /*  move partition elem to v[0] */
     last_swapped_pos = left;
     for (i = left + 1; i <= right; i++) /* partition */
         if (v[i] < v[left])
