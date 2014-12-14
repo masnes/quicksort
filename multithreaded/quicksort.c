@@ -26,7 +26,7 @@ void swap(int v[], long int i, long int j)
     v[j] = temp;
 }
 
-int threads_to_create() 
+int threads_to_create()
 {
     int threads_to_create;
 
@@ -56,20 +56,15 @@ void *quicksort(void *q)
     qpackage leftpkg;
     qpackage rightpkg;
 
+
+    if (left >= right)   /* do nothing if array contains */
+        return NULL;     /* fewer than 2 elements */
+
     package = q;
 
     v = package->v;
     left = package->left;
     right = package->right;
-
-    /* only deal with threading overhead if it's likely to be necessary */
-    if (allowed_threads > 0) {
-        create_threads = threads_to_create();
-    } else
-        create_threads = 0;
-
-    if (left >= right)   /* do nothing if array contains */
-        return NULL;     /* fewer than 2 elements */
 
     swap(v, left, (left + right)/2);  /*  move partition elem to v[0] */
     last_swapped_pos = left;
@@ -85,6 +80,12 @@ void *quicksort(void *q)
     rightpkg.v = v;
     rightpkg.left = last_swapped_pos+1;
     rightpkg.right = right;
+
+    /* only deal with threading overhead if it's likely to be necessary */
+    if (allowed_threads > 0) {
+        create_threads = threads_to_create();
+    } else
+        create_threads = 0;
 
     if (create_threads == 2) {
         pthread_create(&left_thread, NULL, quicksort, &leftpkg);
