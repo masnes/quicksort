@@ -16,6 +16,13 @@ void swap(int v[], long int i, long int j)
 void quicksort(int v[], long int left, long int right)
 {
     long int i, last_swapped_pos;
+		long int swap_pos;
+
+		/* randomized quicksort, not just quicksort */
+		if (right - left + 1) { /* avoid mod by 0 */
+			swap_pos = rand() % (right-left+1);  /* anywhere in [left .. right] */
+			swap(v, v[left], v[swap_pos]);
+		}
 
     if (left >= right) /* do nothing if array contains */
         return;        /* fewer than 2 elements */
