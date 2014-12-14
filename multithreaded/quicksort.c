@@ -157,4 +157,6 @@ int main()
     quicksort(&q);
 
     print_array(output, array, "Array after sorting:");
+
+    fclose(output);
 }
